@@ -1,0 +1,15 @@
+ROS  code in /src
+
+This part is used for SLAM and navigation. It includes the configure files and tf files, odom information files and sensors data publish node . 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+User manual:
+1. Install related ROS packages
+2. create a catkin workspace.
+3. Extract the code in the motor_controller/src in the workspace
+4. catkin_make
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Code authors： Jun Yin

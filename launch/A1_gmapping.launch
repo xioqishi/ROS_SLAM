@@ -1,0 +1,52 @@
+<!--This launch the gmapping node and generate the map-->
+
+
+<launch>
+  <!-- start kinect2-->
+  <include file="$(find dennis_nav)/launch/twist_mux.launch">
+
+  </include>
+
+  <node pkg="gmapping" type="slam_gmapping" name="simple_gmapping" output="screen">
+    <param name="map_update_interval" value="2"/>
+    <param name="maxUrange" value="8.0"/>
+    <param name="sigma" value="0.05"/>
+    <param name="kernelSize" value="1"/>
+    <param name="lstep" value="0.05"/>
+    <param name="astep" value="0.05"/>
+    <param name="iterations" value="5"/>
+    <param name="lsigma" value="0.075"/>
+    <param name="ogain" value="3.0"/>
+    <param name="lskip" value="0"/>
+    <param name="minimumScore" value="50"/>
+    <param name="srr" value="0.1"/>
+    <param name="srt" value="0.2"/>
+    <param name="str" value="0.1"/>
+    <param name="stt" value="0.2"/>
+    <param name="linearUpdate" value="1.0"/>
+    <param name="angularUpdate" value="0.5"/>
+    <param name="temporalUpdate" value="2.0"/>
+    <param name="resampleThreshold" value="0.5"/>
+    <param name="particles" value="60"/>
+    <param name="xmin" value="-4.0"/>
+    <param name="ymin" value="-4.0"/>
+    <param name="xmax" value="4.0"/>
+    <param name="ymax" value="4.0"/>
+    <param name="delta" value="0.05"/>
+    <param name="llsamplerange" value="0.01"/>
+    <param name="llsamplestep" value="0.01"/>
+    <param name="lasamplerange" value="0.005"/>
+    <param name="lasamplestep" value="0.005"/>
+  </node>
+
+
+<!--Publish the fixed tf relationships-->
+  <node pkg="tf" type="static_transform_publisher" name="lidar_tf" args="0.18 0 0.075 0 0 0 /base_link /laser 20" />
+
+  <node pkg="tf" type="static_transform_publisher" name="ir_top_tf" args="0.15 0 0.045 0 0 0 /base_link /IR_top 20" />
+  <node pkg="tf" type="static_transform_publisher" name="ir_left_tf" args="0.15 0.08 0.045 1 0 0  /base_link /IR_left 20" />
+  <node pkg="tf" type="static_transform_publisher" name="ir_right_tf" args="0.15 -0.08 0.045 -1 0 0 /base_link /IR_right 20" />
+  <node pkg="dennis_nav" type="servo_tf.py" name="oddom" />
+  <node pkg="dennis_nav" type="back_home.py" name="back_home" />
+  <node pkg="dennis_nav" type="key_board.py" name="key_board" />
+</launch>
